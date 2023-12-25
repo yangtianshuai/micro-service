@@ -40,7 +40,7 @@ spring:
       host: 39.103.174.23
       port: 6379
       database: 0
-      password: "honlivhp@123"
+      password: "XXX"
   cloud:
     nacos: #服务注册发现
       discovery:
@@ -48,12 +48,12 @@ spring:
         namespace: b00af556-f7d6-40c9-aff0-5ccc3adf90ef
         group: demo
         username: nacos
-        password: nacos
+        password: XXX
       config: #配置中心
         server-addr: 10.1.33.57:8848
         namespace: b00af556-f7d6-40c9-aff0-5ccc3adf90ef
         username: nacos
-        password: nacos
+        password: XXX
         file-extension: yaml
 #        import-check:
 #          enabled: false
@@ -66,7 +66,7 @@ spring:
     host: 10.1.33.53
     port: 5672
     username: honliv
-    password: 123456
+    password: XXX
     virtual-host: /
     template:
       exchange: demo-exchange
