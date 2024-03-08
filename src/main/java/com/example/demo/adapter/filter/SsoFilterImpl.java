@@ -2,7 +2,10 @@ package com.example.demo.adapter.filter;
 
 import api.config.sso.ISsoHandler;
 import api.config.sso.SsoCookie;
-import com.honlivhp.api.config.SsoFilter;
+import api.config.SsoFilter;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Arrays;
 
 public class SsoFilterImpl extends SsoFilter {
 
@@ -23,5 +26,13 @@ public class SsoFilterImpl extends SsoFilter {
     public void LogoutComplate(SsoCookie ssoCookie) {
         //SSO登出
         //需要清除服务器中的Session（如果有）
+    }
+
+    @Override
+    public String GetCookieID(HttpServletRequest httpServletRequest) {
+        String id = Arrays.stream(httpServletRequest.getCookies())
+                .filter(t->t.getName() == "放在cookie中的名字").findFirst().get().getValue();
+        //String id = httpServletRequest.getHeader("放在cookie中的名字");
+        return id;
     }
 }
