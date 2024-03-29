@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration()
 public class CacheConfigration {
     @Bean
-    public CacheUnit useCas() {
+    public CacheUnit useCache() {
         ICacheUnit cache = new MemoryCacheUnit();
         CacheUnit cache_unit = new CacheUnit(cache);
         cache_unit.setOutTime(60*30);
