@@ -6,8 +6,6 @@ import api.config.sso.IPMapping;
 import api.config.sso.ISsoHandler;
 import api.config.sso.SsoOptions;
 import api.config.sso.cas.CasHandler;
-import api.config.sso.oauth2.OAuth2Handler;
-import api.config.sso.oauth2.OAuth2Mode;
 import api.config.sso.oauth2.OAuth2Options;
 import com.example.demo.adapter.filter.SsoFilterImpl;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 
 @EnableSSO
-@Configuration(proxyBeanMethods = false)
+@Configuration()
 public class SsoConfiguration {
 
     private static SsoOptions options;
