@@ -28,7 +28,7 @@ spring:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@10.1.33.46:1521:oracle10
     username: his
-    password: XXX
+    password: his
   jpa:
     show-sql: true
     properties:

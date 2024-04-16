@@ -49,6 +49,7 @@ dependencyManagement {
 }
 
 dependencies {
+
     implementation fileTree(dir:'lib',includes:['*jar'])
     //只编译不打包
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
