@@ -1,38 +1,55 @@
 package com.example.demo.adapter.filter;
 
+import api.config.SsoFilter;
+import api.config.session.ServerSession;
+import api.config.session.Session;
 import api.config.sso.ISsoHandler;
 import api.config.sso.SsoCookie;
-import api.config.SsoFilter;
+import api.config.utility.StringUtil;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Arrays;
 
 public class SsoFilterImpl extends SsoFilter {
 
-    public SsoFilterImpl(ISsoHandler ssoHandler) {
+    protected ServerSession _session;
+
+    public SsoFilterImpl(ServerSession session,ISsoHandler ssoHandler) {
         super(ssoHandler);
+        this._session = session;
     }
 
 
     @Override
-    public void ValidateComplate(SsoCookie ssoCookie) {
+    public void ValidateComplate(SsoCookie cookie) {
         //SSO登入
-        //令牌：ssoCookie.ID
+        if (_session.contain(cookie.ID)) {
+            String id = GetCookieID(this.request);
+            if (!StringUtil.isNullOrEmpty(id) && !id.equals(cookie.ID)) {
+                this.setToken(cookie.ID);
+            }
+            return;
+        }
+        //返回Token
+        this.setToken(cookie.ID);
+
         //如果你不希望频繁进行验证，就需要在这里保存下来令牌
         //保存令牌方式：Session、JWT
+        //建议自定义Session继承实现
+        Session user = new Session();
+        user.token = cookie.ID;
+        _session.set(user);
     }
-
     @Override
-    public void LogoutComplate(SsoCookie ssoCookie) {
+    public void LogoutComplate(SsoCookie cookie) {
         //SSO登出
-        //需要清除服务器中的Session（如果有）
+        if (_session.contain(cookie.ID))        {
+            //需要清除服务器中的Session（如果有）
+            _session.remove(cookie.ID);
+        }
+
     }
 
     @Override
     public String GetCookieID(HttpServletRequest httpServletRequest) {
-        String id = Arrays.stream(httpServletRequest.getCookies())
-                .filter(t->t.getName() == "放在cookie中的名字").findFirst().get().getValue();
-        //String id = httpServletRequest.getHeader("放在cookie中的名字");
-        return id;
+        return this.getToken();
     }
 }
